@@ -1,77 +1,4 @@
 <?php
-/**
- * unifiedorder 统一下单
- * 应用场景
- * 除付款码支付场景以外，商户系统先调用该接口在微信支付服务后台生成预支付交易单，
- * 返回正确的预支付交易会话标识后再按Native、JSAPI、APP等不同场景生成交易串调起支付
- *
- * URL地址：https://api.mch.weixin.qq.com/pay/unifiedorder
- */
-include 'config.php';
-
-$unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-
-$oop = new overSeaPay($config);
-
-$params = array(
-    "appid"      => $config['appid'],
-    "mch_id"     => $config['mch_id'],//aapay
-    "sub_mch_id" => $config['sub_mch_id'],//qibee
-    "sub_appid"  => $config['sub_appid'],
-    "nonce_str"  => 'Qibey' . mt_rand(1000000,2000000) . 'LTD',
-    "body"       => "test",
-    "out_trade_no" => date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT)."",
-    "total_fee"  => 100,
-    "fee_type"   => "HKD",//usd
-    "spbill_create_ip" =>  $_SERVER['REMOTE_ADDR'],
-    //"notify_url"=> "https://www.ipasspaytest.biz/index.php/Thirdpay/Wxpay/notifyUrl",
-    "notify_url"=> $config['notify_url'],
-    "trade_type"=> "JSAPI",
-    // "sub_openid"=> $oop->getOpenid(),
-    // "sub_openid"=> $config['sub_openid'],
-);
-
-$params['sub_openid'] = $oop->getOpenid();
-
-//$unified_gateway = "https://apihk.mch.weixin.qq.com/pay/unifiedorder";
-$string         = $oop->ASCII($params);
-$params["sign"] = $oop->getSign($string); //Section 5.3.1 Signature Algorithm.
-$xmlData        = $oop->arrayToXml($params);
-$curlData = $oop->curl($xmlData,$unified_gateway);
-$response = $oop->xmlToArray($curlData);
-
-// 成功
-if ($response["return_code"] == "SUCCESS") {
-    $paramsOrder = array(
-        "appId"     => "wx39963eb0c927fc5e",
-        "nonceStr"  => mt_rand(1000000,2000000)."",
-        "package"   => "prepay_id=".$response["prepay_id"],
-        "signType"  => "MD5",
-        "timeStamp" => time()."",
-    ) ;
-
-    $stringOrder = $oop->ASCII($paramsOrder);
-    $paramsOrder["paySign"] = $oop->getSign($stringOrder); //Section 5.3.1 Signature Algorithm.
-    $jsapi->values['appId'] = $paramsOrder["appId"];
-    $jsapi->values['timeStamp'] = (string)$paramsOrder["timeStamp"];
-    $jsapi->values['nonceStr'] = $paramsOrder["nonceStr"];
-    $jsapi->values['package'] = $paramsOrder["package"];
-    $jsapi->values['signType'] = $paramsOrder["signType"];
-    $jsapi->values['paySign'] = $paramsOrder["paySign"];
-    $parameters = json_encode($jsapi->values);
-    //echo $parameters;
-    //var_dump($paramsOrder);
-    //exit;
-    //return $parameters;
-
-
-} else { // 失败
-    // TODO 入库
-    //return $response["return_msg"];
-    $parameters = $response["return_msg"];
-}
-
-
 class overSeaPay
 {
     //支付网关-大陆服务器
@@ -103,8 +30,7 @@ class overSeaPay
         $this->appid        = $config['sub_appid'];
         $this->secret       = $config['secret'];
         $this->redirect_uri = $config['redirect_uri'];
-        //$this->sub_openid   = $config['sub_openid'];
-        $this->sub_openid   = self::getOpenid();
+        $this->sub_openid   = $config['sub_openid'];
     }
 
     //自定义ascii排序
@@ -132,7 +58,7 @@ class overSeaPay
         return $sign;
     }
 
-    public static function getOpenid() {
+    public function getOpenid() {
         // 有code返回值
         if (isset($_GET['code'])) {
             //获取code码，以获取openid
@@ -201,6 +127,9 @@ class overSeaPay
     public function http_get($url)
     {
         $curlVersion = curl_version();
+        if ( is_array($curlVersion) && isset($curlVersion['version_number'])){
+            $curlVersion = $curlVersion['version_number'];
+        }
         $ua = "WXPaySDK/3.0.9 (".PHP_OS.") PHP/".PHP_VERSION." CURL/".$curlVersion." "
             .$this->sub_mch_id;
 
@@ -225,82 +154,3 @@ class overSeaPay
 
     }
 }
-?>
-
-<html>
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>微信支付样例-支付</title>
-    <script type="text/javascript">
-        //调用微信JS api 支付
-        function jsApiCall()
-        {
-            WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',
-                <?php echo $parameters; ?>,
-                function(res){
-                    WeixinJSBridge.log(res.err_msg);
-                    //
-                    alert(res.err_code+res.err_desc+res.err_msg);
-                }
-            );
-        }
-
-        function callpay()
-        {
-            if (typeof WeixinJSBridge == "undefined"){
-                if( document.addEventListener ){
-                    document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-                }else if (document.attachEvent){
-                    document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                    document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-                }
-            }else{
-                jsApiCall();
-            }
-        }
-    </script>
-    <script type="text/javascript">
-        //获取共享地址
-        function editAddress()
-        {
-            WeixinJSBridge.invoke(
-                'editAddress',
-                <?php echo $editAddress; ?>,
-                function(res){
-                    var value1 = res.proviceFirstStageName;
-                    var value2 = res.addressCitySecondStageName;
-                    var value3 = res.addressCountiesThirdStageName;
-                    var value4 = res.addressDetailInfo;
-                    var tel = res.telNumber;
-
-                    alert(value1 + value2 + value3 + value4 + ":" + tel);
-                }
-            );
-        }
-
-        window.onload = function(){
-            if (typeof WeixinJSBridge == "undefined"){
-                if( document.addEventListener ){
-                    document.addEventListener('WeixinJSBridgeReady', editAddress, false);
-                }else if (document.attachEvent){
-                    document.attachEvent('WeixinJSBridgeReady', editAddress);
-                    document.attachEvent('onWeixinJSBridgeReady', editAddress);
-                }
-            }else{
-                editAddress();
-            }
-        };
-
-
-    </script>
-</head>
-<body>
-<br/>
-<font color="#9ACD32"><b>该笔订单支付金额为<span style="color:#f00;font-size:50px"> <?php echo 0.01;?></span>元</b></font><br/><br/>
-<div align="center">
-    <button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >立即支付</button>
-</div>
-</body>
-</html>
