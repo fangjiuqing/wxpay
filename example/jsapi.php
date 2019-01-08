@@ -43,6 +43,7 @@ try{
 	$input->SetOpenid($openId);
 	$config = new WxPayConfig();
 	$order = WxPayApi::unifiedOrder($config, $input);
+	var_dump($order);die;
 	echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
 	printf_info($order);
 	$jsApiParameters = $tools->GetJsApiParameters($order);
