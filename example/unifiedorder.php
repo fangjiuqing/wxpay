@@ -104,7 +104,7 @@ class overSeaPay
         $this->secret       = $config['secret'];
         $this->redirect_uri = $config['redirect_uri'];
         //$this->sub_openid   = $config['sub_openid'];
-        $this->sub_openid   = self::getOpenid(),
+        $this->sub_openid   = self::getOpenid();
     }
 
     //自定义ascii排序
