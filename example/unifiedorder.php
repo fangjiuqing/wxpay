@@ -59,12 +59,13 @@ if ($response["return_code"] == "SUCCESS") {
     //echo $parameters;
     //var_dump($paramsOrder);
     //exit;
-    return $parameters;
+    //return $parameters;
 
 
 } else { // 失败
     // TODO 入库
-    return $response["return_msg"];
+    //return $response["return_msg"];
+    $parameters = $response["return_msg"];
 }
 
 
