@@ -11,7 +11,7 @@ include 'config.php';
 
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-$oop = new overSeaPay();
+$oop = new overSeaPay($config);
 
 $params = array(
     "appid"      => $config['appid'],
@@ -84,19 +84,24 @@ class overSeaPay
     //private $refund_gateway = "https://payment.fhtpay.com/FHTPayment/api/debit";
     //查询网关
     //private $query_gateway = "https://payment.goopay.cn/onlineQuery";
-    private $mch_id       = $config['mch_id'];
-    private $key          = $config['key'];
-    private $sub_mch_id   = $config['sub_mch_id'];
-    private $appid        = $config['sub_appid'];
-    private $secret       = $config['secret'];
+    private $mch_id;
+    private $key;
+    private $sub_mch_id;
+    private $appid;
+    private $secret;
     //private $redirect_uri = 'https://ipasspay.xyz/afonso/wxpay/demo/wxpay.php';
     //private $redirect_uri = 'https://qifanonline.com/wxpay/wxpay.php';
-    private $redirect_uri = $config['redirect_uri'];
-    private $sub_openid   = $config['sub_openid'];
+    private $redirect_uri;
+    private $sub_openid;
 
-    public function _initialize() {
-        //继承前面的配置
-
+    public function __construct( $config = []) {
+        $this->mch_id       = $config['mch_id'];
+        $this->key          = $config['key'];
+        $this->sub_mch_id   = $config['sub_mch_id'];
+        $this->appid        = $config['sub_appid'];
+        $this->secret       = $config['secret'];
+        $this->redirect_uri = $config['redirect_uri'];
+        $this->sub_openid   = $config['sub_openid'];
     }
 
     //自定义ascii排序
