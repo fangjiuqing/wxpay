@@ -40,10 +40,10 @@ $response = $oop->xmlToArray($curlData);
 // 成功
 if ($response["return_code"] == "SUCCESS") {
     $paramsOrder = array(
-        "appId" => "wx39963eb0c927fc5e",
-        "nonceStr" => mt_rand(1000000,2000000)."",
-        "package" => "prepay_id=".$response["prepay_id"],
-        "signType" => "MD5",
+        "appId"     => "wx39963eb0c927fc5e",
+        "nonceStr"  => mt_rand(1000000,2000000)."",
+        "package"   => "prepay_id=".$response["prepay_id"],
+        "signType"  => "MD5",
         "timeStamp" => time()."",
     ) ;
 
@@ -100,7 +100,8 @@ class overSeaPay
         $this->appid        = $config['sub_appid'];
         $this->secret       = $config['secret'];
         $this->redirect_uri = $config['redirect_uri'];
-        $this->sub_openid   = $config['sub_openid'];
+        //$this->sub_openid   = $config['sub_openid'];
+        $this->sub_openid   = self::getOpenid(),
     }
 
     //自定义ascii排序
@@ -128,7 +129,7 @@ class overSeaPay
         return $sign;
     }
 
-    public function getOpenid() {
+    public static function getOpenid() {
         // 有code返回值
         if (isset($_GET['code'])) {
             //获取code码，以获取openid
