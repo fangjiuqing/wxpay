@@ -9,4 +9,5 @@ $config = [
     "key"		  => "jYPtbo3WGo6RoSeBY3vejN3pYTeQJY2R",
     "secret"      => "7b9f13224885e04b6c3b1d3613b4bc98",
     "redirect_uri"=> "http://qifanonline.com/wxpay/demo/wxpay.php",
+    "notify_url"  => "http://qifanonline.com/wxpay/demo/notifyUrl.php",
 ];
