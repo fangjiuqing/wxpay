@@ -36,8 +36,7 @@ $params["sign"] = $oop->getSign($string); //Section 5.3.1 Signature Algorithm.
 $xmlData        = $oop->arrayToXml($params);
 $curlData = $oop->curl($xmlData,$unified_gateway);
 $response = $oop->xmlToArray($curlData);
-var_dump($response);
-exit;
+
 // 成功
 if ($response["return_code"] == "SUCCESS") {
     $paramsOrder = array(
@@ -48,7 +47,6 @@ if ($response["return_code"] == "SUCCESS") {
         "timeStamp" => time()."",
     ) ;
 
-    $oop = new overSeaPay();
     $stringOrder = $oop->ASCII($paramsOrder);
     $paramsOrder["paySign"] = $oop->getSign($stringOrder); //Section 5.3.1 Signature Algorithm.
     $jsapi->values['appId'] = $paramsOrder["appId"];
