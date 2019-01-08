@@ -27,9 +27,12 @@ $params = array(
     //"notify_url"=> "https://www.ipasspaytest.biz/index.php/Thirdpay/Wxpay/notifyUrl",
     "notify_url"=> $config['notify_url'],
     "trade_type"=> "JSAPI",
-    //"sub_openid"=> $oop->getOpenid(),
-    "sub_openid"=> $config['sub_openid'],
+    // "sub_openid"=> $oop->getOpenid(),
+    // "sub_openid"=> $config['sub_openid'],
 );
+
+$params['sub_openid'] = $oop->getOpenid();
+
 //$unified_gateway = "https://apihk.mch.weixin.qq.com/pay/unifiedorder";
 $string         = $oop->ASCII($params);
 $params["sign"] = $oop->getSign($string); //Section 5.3.1 Signature Algorithm.
