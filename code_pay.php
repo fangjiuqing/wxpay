@@ -11,11 +11,11 @@ include 'config.php';
 include 'overSeaPay.php';
 
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-//die('hi');
+
+// 重置跳转地址
 $config['redirect_uri'] = 'http://qifanonline.com/wxpay/andy/code_pay.php';
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
-//var_dump($config);die;
 $params = array(
     "appid"      => $config['appid'],
     "mch_id"     => $config['mch_id'],//aapay
@@ -46,24 +46,6 @@ $response = $oop->xmlToArray($curlData);
 
 // 成功
 if ($response["return_code"] == "SUCCESS") {
-  /*  $paramsOrder = array(
-        "appId"     => "wx39963eb0c927fc5e",
-        "nonceStr"  => mt_rand(1000000,2000000)."",
-        "package"   => "prepay_id=".$response["prepay_id"],
-        "signType"  => "MD5",
-        "timeStamp" => time()."",
-    ) ;
-
-    $stringOrder = $oop->ASCII($paramsOrder);
-    $paramsOrder["paySign"] = $oop->getSign($stringOrder); //Section 5.3.1 Signature Algorithm.
-    $jsapi->values['appId'] = $paramsOrder["appId"];
-    $jsapi->values['timeStamp'] = (string)$paramsOrder["timeStamp"];
-    $jsapi->values['nonceStr'] = $paramsOrder["nonceStr"];
-    $jsapi->values['package'] = $paramsOrder["package"];
-    $jsapi->values['signType'] = $paramsOrder["signType"];
-    $jsapi->values['paySign'] = $paramsOrder["paySign"];
-    $parameters = json_encode($jsapi->values);
-   */
     $code_url   = $response["code_url"];
 } else { // 失败
     // TODO 入库
