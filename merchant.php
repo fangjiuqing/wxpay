@@ -9,7 +9,7 @@ include 'overSeaPay.php';
 $mid    = isset($_GET['mid']) ? $_GET['mid'] : 0;
 $mappid = isset($_GET['mappid']) ? $_GET['mappid'] : 1000;
 
-$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mappid . '%26mappid=' . $mappid;
+$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mid . '&mappid=' . $mappid;
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
