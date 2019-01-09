@@ -162,7 +162,7 @@ if ($response["return_code"] == "SUCCESS") {
 </table>
 <div align="center" style="margin:20px 0px; padding:0px 20px;">
     <button style="width:40%x; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" onclick="callpay()" >JSAPI支付</button>
-    <a style="width:40%x; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="button" href="code_pay.php" >扫码支付</a>
+    <a style="width:40%x; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px; display: inline-block;" type="button" href="code_pay.php" >扫码支付</a>
 </div>
 </body>
 </html>
