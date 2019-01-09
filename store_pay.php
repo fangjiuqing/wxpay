@@ -12,8 +12,8 @@ include 'overSeaPay.php';
 
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/store_pay.php';
-$config['attach']          =    serialize($_POST);
+$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php';
+//$config['attach']          =    serialize($_POST);
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
