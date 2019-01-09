@@ -25,7 +25,7 @@ $params = array(
     "nonce_str"  => mt_rand(1000000,2000000),
     "body"       => "Ipad Mini 2 64G Celler",
     "out_trade_no" => date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT)."",
-    "total_fee"  => 10,
+    "total_fee"  => $_POST['amount'],
     "fee_type"   => "HKD",//usd
     "spbill_create_ip" =>  $_SERVER['REMOTE_ADDR'],
     //"notify_url"=> "https://www.ipasspaytest.biz/index.php/Thirdpay/Wxpay/notifyUrl",
@@ -49,6 +49,8 @@ $response = $oop->xmlToArray($curlData);
 $my_params = [
     '小商户名称'    =>    '淮海路煎饼果子店',
     '电话'         =>    '0551-87221127',
+    'merch_id'    =>     $_POST['merch_id'],
+    'merch_appid' =>     $_POST['merch_appid'],
 ];
 
 
@@ -78,8 +80,6 @@ if ($response["return_code"] == "SUCCESS") {
     //return $response["return_msg"];
     $parameters = $response["return_msg"];
 }
-
-var_dump($my_params);
 ?>
 
 <html>
