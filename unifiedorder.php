@@ -13,8 +13,9 @@ include 'overSeaPay.php';
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
 $oop = new overSeaPay($config);
-$config['sub_openid'] = 'o8wR60-6nxIoFj5ZOVoucSWwn_gw';//L wechat open id
-
+//$config['sub_openid'] = 'o8wR60-6nxIoFj5ZOVoucSWwn_gw';//L wechat open id
+  $config['sub_openid'] = $oop->getOpenid();
+//var_dump($config['sub_openid']);die;
 $params = array(
     "appid"      => $config['appid'],
     "mch_id"     => $config['mch_id'],//aapay
