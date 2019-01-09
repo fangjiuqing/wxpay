@@ -45,7 +45,7 @@ $xmlData        = $oop->arrayToXml($params);
 $curlData = $oop->curl($xmlData,$unified_gateway);
 $response = $oop->xmlToArray($curlData);
 
-var_dump($response);die;
+var_dump($response);
 // 成功
 if ($response["return_code"] == "SUCCESS") {
     $paramsOrder = array(
@@ -66,8 +66,8 @@ if ($response["return_code"] == "SUCCESS") {
     $jsapi->values['paySign'] = $paramsOrder["paySign"];
     $parameters = json_encode($jsapi->values);
     //echo $parameters;
-    //var_dump($paramsOrder);
-    //exit;
+    var_dump($paramsOrder);
+    exit;
     //return $parameters;
 
 
