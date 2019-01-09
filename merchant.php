@@ -16,7 +16,7 @@ $appid = isset($_GET['appid']) ? $_GET['appid'] : 0;
 	    <br/><br/>
 	    <div>
 	    	<p>
-	    		<font color="#9ACD32"><b>请输入支付金额<span style="color:#f00;font-size:50px"><input type="text" name="amount"></span>元</b></font>
+	    		<font color="#9ACD32"><b>请输入支付金额<span style="color:#f00;font-size:50px"><input type="text" name="amount"></span>分</b></font>
 	    	</p>
 	    </div>
 	    <div align="center">
