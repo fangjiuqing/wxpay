@@ -13,7 +13,7 @@ include 'overSeaPay.php';
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
 $config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/store_pay.php';
-var_dump($_POST);die;
+$config['attach']          =    serialize($_POST);
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
@@ -46,8 +46,8 @@ $response = $oop->xmlToArray($curlData);
 
 # 拼接自己的参数
 $my_params = [
-    'mid'    =>    $_POST['mid'],
-    'appid'  =>    $_POST['appid'],
+    '小商户名称'    =>    '淮海路煎饼果子店',
+    '电话'         =>    '0551-87221127',
 ];
 
 
