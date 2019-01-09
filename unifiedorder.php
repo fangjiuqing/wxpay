@@ -45,6 +45,7 @@ $xmlData        = $oop->arrayToXml($params);
 $curlData = $oop->curl($xmlData,$unified_gateway);
 $response = $oop->xmlToArray($curlData);
 
+var_dump($response);die;
 // 成功
 if ($response["return_code"] == "SUCCESS") {
     $paramsOrder = array(
