@@ -29,7 +29,7 @@ $params = array(
     "spbill_create_ip" =>  $_SERVER['REMOTE_ADDR'],
     //"notify_url"=> "https://www.ipasspaytest.biz/index.php/Thirdpay/Wxpay/notifyUrl",
     "notify_url"=> $config['notify_url'],
-    "trade_type"=> "JSAPI",
+    "trade_type"=> "NATIVE",
     "sub_openid"     => $config['sub_openid'],
     // 此处不可自定义参数
     // "custom_mid"     => '201821231', 
