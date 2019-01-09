@@ -6,12 +6,14 @@
 include 'config.php';
 include 'overSeaPay.php';
 
-//$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php';
+$mid   = isset($_GET['mid']) ? $_GET['mid'] : 0;
+$appid = isset($_GET['appid']) ? $_GET['appid'] : 0;
+
+$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mid . '&appid=' . $appid;
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
-$mid   = isset($_GET['mid']) ? $_GET['mid'] : 0;
-$appid = isset($_GET['appid']) ? $_GET['appid'] : 0;
+
 ?>
 <html>
 <head>
