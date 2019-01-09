@@ -6,8 +6,8 @@
 include 'config.php';
 include 'overSeaPay.php';
 
-$mid   = isset($_GET['mid']) ? $_GET['mid'] : 0;
-$mappid = isset($_GET['mappid']) ? $_GET['mappid'] : 0;
+$mid    = isset($_GET['mid']) ? $_GET['mid'] : 0;
+$mappid = isset($_GET['mappid']) ? $_GET['mappid'] : 1000;
 
 $config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mid . '&mappid=' . $mappid;
 $oop = new overSeaPay($config);
@@ -22,11 +22,13 @@ $config['sub_openid'] = $oop->getOpenid();
     <title>线下支付样例</title>
 </head>
 <body>
-    <form action="store_pay.php" method="post">
+    <form action="store_pay.php" method="POST">
 	    <br/><br/>
 	    <div>
 	    	<p>
-	    		<font color="#9ACD32"><b>请输入支付金额<span style="color:#f00;font-size:50px"><input type="number" name="amount"></span>分</b></font>
+	    		<font color="#9ACD32">
+	    			<b>请输入支付金额<span style="color:#f00;font-size:50px"><input type="number" name="amount"></span>分</b>
+	    		</font>
 	    	</p>
 	    </div>
 	    <div align="center">
