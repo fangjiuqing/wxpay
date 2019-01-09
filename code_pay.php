@@ -11,11 +11,11 @@ include 'config.php';
 include 'overSeaPay.php';
 
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
-
+//die('hi');
+$config['redirect_uri'] = 'http://qifanonline.com/wxpay/andy/code_pay.php';
 $oop = new overSeaPay($config);
-//$config['sub_openid'] = 'o8wR60-6nxIoFj5ZOVoucSWwn_gw';//L wechat open id
-  $config['sub_openid'] = $oop->getOpenid();
-//var_dump($config['sub_openid']);die;
+$config['sub_openid'] = $oop->getOpenid();
+//var_dump($config);die;
 $params = array(
     "appid"      => $config['appid'],
     "mch_id"     => $config['mch_id'],//aapay
@@ -36,7 +36,6 @@ $params = array(
    // "custom_appid"   => '219378429912489232',  
 );
 
-//$params['sub_openid'] = $oop->getOpenid();
 
 //$unified_gateway = "https://apihk.mch.weixin.qq.com/pay/unifiedorder";
 $string         = $oop->ASCII($params);
@@ -47,7 +46,7 @@ $response = $oop->xmlToArray($curlData);
 
 // 成功
 if ($response["return_code"] == "SUCCESS") {
-    $paramsOrder = array(
+  /*  $paramsOrder = array(
         "appId"     => "wx39963eb0c927fc5e",
         "nonceStr"  => mt_rand(1000000,2000000)."",
         "package"   => "prepay_id=".$response["prepay_id"],
@@ -64,7 +63,7 @@ if ($response["return_code"] == "SUCCESS") {
     $jsapi->values['signType'] = $paramsOrder["signType"];
     $jsapi->values['paySign'] = $paramsOrder["paySign"];
     $parameters = json_encode($jsapi->values);
-
+   */
     $code_url   = $response["code_url"];
 } else { // 失败
     // TODO 入库
