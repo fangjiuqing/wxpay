@@ -7,9 +7,9 @@ include 'config.php';
 include 'overSeaPay.php';
 
 $mid   = isset($_GET['mid']) ? $_GET['mid'] : 0;
-$appid = isset($_GET['appid']) ? $_GET['appid'] : 0;
+$mappid = isset($_GET['mappid']) ? $_GET['mappid'] : 0;
 
-$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mid . '&appid=' . $appid;
+$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?mid=' . $mid . '&mappid=' . $mappid;
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
@@ -31,7 +31,7 @@ $config['sub_openid'] = $oop->getOpenid();
 	    </div>
 	    <div align="center">
 	        <input type="hidden" name="merch_id" value="<?php echo $mid; ?>" />
-	        <input type="hidden" name="merch_appid" value="<?php echo $appid; ?>" />
+	        <input type="hidden" name="merch_appid" value="<?php echo $mappid; ?>" />
 	        <input type="hidden" name="sub_openid" value="<?php echo $config['sub_openid']; ?>" />
 	        <button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="submit" >提交</button>
 	    </div>
