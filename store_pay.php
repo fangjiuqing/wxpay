@@ -12,10 +12,10 @@ include 'overSeaPay.php';
 
 $unified_gateway = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
-$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php';
+$config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/store_pay.php';
 //$config['attach']          =    serialize($_POST);
 $oop = new overSeaPay($config);
-$config['sub_openid'] = $oop->getOpenid();
+//$config['sub_openid'] = $oop->getOpenid();
 
 $params = array(
     "appid"      => $config['appid'],
@@ -31,7 +31,8 @@ $params = array(
     //"notify_url"=> "https://www.ipasspaytest.biz/index.php/Thirdpay/Wxpay/notifyUrl",
     "notify_url"=> $config['notify_url'],
     "trade_type"=> "JSAPI",
-    "sub_openid"     => $config['sub_openid'],
+    //"sub_openid"     => $config['sub_openid'],
+    "sub_openid"     => $_POST['sub_openid'],
 );
 
 //$params['sub_openid'] = $oop->getOpenid();

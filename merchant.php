@@ -30,6 +30,7 @@ $appid = isset($_GET['appid']) ? $_GET['appid'] : 0;
 	    <div align="center">
 	        <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
 	        <input type="hidden" name="appid" value="<?php echo $appid; ?>" />
+	        <input type="hidden" name="sub_openid" value="<?php echo $config['sub_openid']; ?>" />
 	        <button style="width:210px; height:50px; border-radius: 15px;background-color:#FE6714; border:0px #FE6714 solid; cursor: pointer;  color:white;  font-size:16px;" type="submit" >提交</button>
 	    </div>
     </form>
