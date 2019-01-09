@@ -13,7 +13,7 @@ $config['redirect_uri']    =    'http://qifanonline.com/wxpay/andy/merchant.php?
 $oop = new overSeaPay($config);
 $config['sub_openid'] = $oop->getOpenid();
 
-
+var_dump($config['redirect_uri']);die;
 ?>
 <html>
 <head>
